@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load divide_by %} {% block content %}
+
+<!-- ======== @Region: #content ======== -->
+<div id="content" class="py-5">
+    <div class="container">
+        <div class="text-center mb-6">
+            <i class="fa fa-flask icon-6x text-warning"></i>
+            <h3>
+                This is the experiment control page, please use with caution
+            </h3>
+            <br>
+            <p>Randomise 100 data and feed into database (Curent data: {{line}} lines): <a href="/control/random" class="btn btn-primary btn-sm">Confirm</a></p>
+            <p>Clear all current products: <a href="/control/delete" class="btn btn-primary btn-sm">Confirm</a> </p>
+            <!--<p>Set initial amount of money per user: <a href="/add/1" class="btn btn-primary btn-sm">Confirm</a> </p>-->
+        </div>
+        <h4>
+
+        </h4>
+        <hr class="my-4 hr-lg" />
+    </div>
+</div>
+{% endblock %}
