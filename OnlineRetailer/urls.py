@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^cart$',
         product_views.product_cart_view, name='cart'),
     url(r'^checkout$',
-        product_views.product_confirmation_view, name='confirm$'),
+        product_views.product_confirmation_view, name='confirm'),
 
     url(r'^add/(?P<item_id>[0-9]+)$',
         product_views.add_to_cart, name='add_to_cart'),
