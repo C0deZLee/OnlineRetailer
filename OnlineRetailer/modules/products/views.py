@@ -17,7 +17,7 @@ def product_list_view(request):
 		cart = request.session.get('cart', [])
 		exp_num = request.session['exp_num']
 
-	products_all = Product.objects.all(experiment_num=exp_num)
+	products_all = Product.objects.filter(experiment_num=exp_num)
 
 	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List'})
 
