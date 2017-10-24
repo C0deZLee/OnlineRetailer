@@ -24,6 +24,7 @@ def product_list_view(request):
 		elif request.session['repeat_count'] == 2:
 			request.session['repeat_count'] = 3
 		else:
+			request.session['repeat_count'] = 4
 			setting = Settings.objects.first()
 			return render(request, 'confirmation.html',
 			              {'code'        : setting.finish_code,
