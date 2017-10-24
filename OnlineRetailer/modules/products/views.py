@@ -9,7 +9,6 @@ from ..experiments.models import Settings, Record
 
 
 def product_list_view(request):
-	request.session['session_set'] = False
 	if not request.session.get('session_set', False):
 		cart = request.session['cart'] = []
 		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
