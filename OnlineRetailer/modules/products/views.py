@@ -19,18 +19,16 @@ def product_list_view(request):
 		exp_num = request.session['exp_num']
 		if request.session['repeat_count'] == 0:
 			request.session['repeat_count'] = 1
-		if request.session['repeat_count'] == 1:
+		elif request.session['repeat_count'] == 1:
 			request.session['repeat_count'] = 2
-		if request.session['repeat_count'] == 2:
+		elif request.session['repeat_count'] == 2:
 			request.session['repeat_count'] = 3
-
-	setting = Settings.objects.first()
-
-	if request.session['repeat_count'] == 3:
-		return render(request, 'confirmation.html',
-		              {'code'        : setting.finish_code,
-		               'title'       : 'Confirmation',
-		               'repeat_count': request.session['repeat_count']})
+		else:
+			setting = Settings.objects.first()
+			return render(request, 'confirmation.html',
+			              {'code'        : setting.finish_code,
+			               'title'       : 'Confirmation',
+			               'repeat_count': request.session['repeat_count']})
 
 	products_all = Product.objects.filter(experiment_num=exp_num)
 
