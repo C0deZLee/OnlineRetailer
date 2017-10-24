@@ -12,14 +12,24 @@ def product_list_view(request):
 	if not request.session.get('session_set', False):
 		cart = request.session['cart'] = []
 		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
+		request.session['repeat_count'] = 0
 		request.session['session_set'] = True
 	else:
 		cart = request.session.get('cart', [])
 		exp_num = request.session['exp_num']
+		request.session['repeat_count'] += 1
+
+	setting = Settings.objects.first()
+
+	if request.session['repeat_count'] >= 5:
+		return render(request, 'confirmation.html',
+		              {'code'        : setting.finish_code,
+		               'title'       : 'Confirmation',
+		               'repeat_count': request.session['repeat_count']})
 
 	products_all = Product.objects.filter(experiment_num=exp_num)
 
-	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List'})
+	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List', 'repeat_count': request.session['repeat_count']})
 
 
 def product_cart_view(request):
@@ -35,8 +45,7 @@ def product_cart_view(request):
 	for product in cart:
 		total += product['price']
 
-	return render(request, 'cart.html', {'cart' : cart, 'title': 'Shopping Cart',
-	                                     'total': total})
+	return render(request, 'cart.html', {'cart': cart, 'title': 'Shopping Cart', 'total': total})
 
 
 def product_confirmation_view(request):
@@ -63,7 +72,13 @@ def product_confirmation_view(request):
 				new_record = Record(score=score, product_id=product['id'], created=timezone.now())
 				new_record.save()
 
-	return render(request, 'confirmation.html', {'code': setting.finish_code, 'title': 'Confirmation', 'cart': cart, 'score': score, 'rank': rank_bonus})
+	return render(request, 'confirmation.html',
+	              {'code'        : setting.finish_code,
+	               'title'       : 'Confirmation',
+	               'cart'        : cart,
+	               'score'       : score,
+	               'rank'        : rank_bonus,
+	               'repeat_count': request.session['repeat_count']})
 
 
 def add_to_cart(request, item_id):
