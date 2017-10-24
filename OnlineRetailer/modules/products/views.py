@@ -9,6 +9,7 @@ from ..experiments.models import Settings, Record
 
 
 def product_list_view(request):
+	request.session['session_set'] = False
 	if not request.session.get('session_set', False):
 		cart = request.session['cart'] = []
 		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
@@ -65,9 +66,9 @@ def product_confirmation_view(request):
 	for product in cart:
 		score += product['price'] / product['real_quality']
 
-		for index, item in enumerate(Product.objects.order_by('real_quality')):
+		for index, item in enumerate(Product.objects.filter(experiment_num=exp_num).order_by('real_quality')):
 			if str(item.title) == str(product['title']):
-				rank_bonus = float(index / 100)
+				rank_bonus = float(float(index) / 50.0)
 				score += rank_bonus
 				new_record = Record(score=score, product_id=product['id'], created=timezone.now())
 				new_record.save()
