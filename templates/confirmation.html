@@ -5,7 +5,7 @@
     <!-- ======== @Region: #content ======== -->
     <div id="content" class="py-5">
         <div class="container">
-            {% if repeat_count >= 5 %}
+            {% if repeat_count == 3 %}
                 <div class="text-center mb-6">
                     <i class="fa fa-check-circle icon-6x text-success"></i>
                     <h3>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if repeat_count < 5 %}
+            {% if repeat_count < 3 %}
                 <div class="text-center">
                     <a href="/"
                        class="btn btn-primary btn-rounded btn-lg">

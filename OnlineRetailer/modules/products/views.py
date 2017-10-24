@@ -18,11 +18,16 @@ def product_list_view(request):
 	else:
 		cart = request.session.get('cart', [])
 		exp_num = request.session['exp_num']
-		request.session['repeat_count'] += 1
+		if request.session['repeat_count'] == 0:
+			request.session['repeat_count'] = 1
+		if request.session['repeat_count'] == 1:
+			request.session['repeat_count'] = 2
+		if request.session['repeat_count'] == 2:
+			request.session['repeat_count'] = 3
 
 	setting = Settings.objects.first()
 
-	if request.session['repeat_count'] >= 5:
+	if request.session['repeat_count'] == 3:
 		return render(request, 'confirmation.html',
 		              {'code'        : setting.finish_code,
 		               'title'       : 'Confirmation',
