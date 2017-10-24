@@ -1,3 +1,5 @@
+from numpy import random
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import timezone
@@ -6,43 +8,46 @@ from .models import Product
 from ..experiments.models import Settings, Record
 
 
-def product_list_view(request, page=None):
-	cart = request.session.get('cart', [])
-	request.session['cart'] = cart
+def product_list_view(request):
+	if not request.session.get('session_set', False):
+		cart = request.session['cart'] = []
+		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
+		request.session['session_set'] = True
+	else:
+		cart = request.session.get('cart', [])
+		exp_num = request.session['exp_num']
 
-	products_all = Product.objects.all()
-	# paginator = Paginator(products_all, 100)
-
-	# try:
-	# 	products = paginator.page(page)
-	# except PageNotAnInteger:
-	# 	# If page is not an integer, deliver first page.
-	# 	products = paginator.page(1)
-	# except EmptyPage:
-	# 	# If page is out of range (e.g. 9999), deliver last page of results.
-	# 	products = paginator.page(paginator.num_pages)
+	products_all = Product.objects.all(experiment_num=exp_num)
 
 	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List'})
 
 
 def product_cart_view(request):
-	cart = request.session.get('cart', [])
-	request.session['cart'] = cart
-
-	# setting = Settings.objects.first()
+	if not request.session.get('session_set', False):
+		cart = request.session['cart'] = []
+		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
+		request.session['session_set'] = True
+	else:
+		cart = request.session.get('cart', [])
+		exp_num = request.session['exp_num']
 
 	total = 0
 	for product in cart:
 		total += product['price']
 
 	return render(request, 'cart.html', {'cart' : cart, 'title': 'Shopping Cart',
-	                                     # 'money': setting.max_money,
 	                                     'total': total})
 
 
 def product_confirmation_view(request):
-	cart = request.session.get('cart', [])
-	request.session['cart'] = []
+	if not request.session.get('session_set', False):
+		cart = request.session['cart'] = []
+		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
+		request.session['session_set'] = True
+	else:
+		cart = request.session.get('cart', [])
+		exp_num = request.session['exp_num']
+
 	setting = Settings.objects.first()
 
 	score = 0
@@ -62,8 +67,14 @@ def product_confirmation_view(request):
 
 
 def add_to_cart(request, item_id):
-	cart = request.session.get('cart', [])
-	request.session['cart'] = cart
+	if not request.session.get('session_set', False):
+		cart = request.session['cart'] = []
+		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
+		request.session['session_set'] = True
+	else:
+		cart = request.session.get('cart', [])
+		exp_num = request.session['exp_num']
+
 	product = Product.objects.get(id=item_id)
 
 	request.session['cart'] = [product.json()]
@@ -72,8 +83,13 @@ def add_to_cart(request, item_id):
 
 
 def remove_from_cart(request, item_id):
-	cart = request.session.get('cart', [])
-	request.session['cart'] = cart
+	if not request.session.get('session_set', False):
+		cart = request.session['cart'] = []
+		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
+		request.session['session_set'] = True
+	else:
+		cart = request.session.get('cart', [])
+		exp_num = request.session['exp_num']
 
 	product = Product.objects.get(id=item_id)
 	cart.remove(product.json())

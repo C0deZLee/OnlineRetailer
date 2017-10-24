@@ -22,28 +22,29 @@ from .modules.products import views as product_views
 from .modules.experiments import views as exp_views
 
 urlpatterns = [
-    url(r'^admin/',
-        admin.site.urls),
+	# Admin site
+	url(r'^admin/',
+	    admin.site.urls),
 
-    url(r'^$',
-        product_views.product_list_view, name='product_list'),
-    url(r'^(?P<page>[0-9]+)$',
-        product_views.product_list_view, name='product_list_page'),
-    url(r'^cart$',
-        product_views.product_cart_view, name='cart'),
-    url(r'^checkout$',
-        product_views.product_confirmation_view, name='confirm'),
+	# Product list
+	url(r'^$',
+	    product_views.product_list_view, name='product_list'),
+	url(r'^cart$',
+	    product_views.product_cart_view, name='cart'),
+	url(r'^checkout$',
+	    product_views.product_confirmation_view, name='confirm'),
+	url(r'^add/(?P<item_id>[0-9]+)$',
+	    product_views.add_to_cart, name='add_to_cart'),
+	url(r'^remove/(?P<item_id>[0-9]+)$',
+	    product_views.remove_from_cart, name='remove_from_cart'),
 
-    url(r'^add/(?P<item_id>[0-9]+)$',
-        product_views.add_to_cart, name='add_to_cart'),
-    url(r'^remove/(?P<item_id>[0-9]+)$',
-        product_views.remove_from_cart, name='remove_from_cart'),
-    url(r'^control/$',
-        exp_views.exp_control_view, name='control'),
-    url(r'^control/random$',
-        exp_views.random, name='random'),
-    url(r'^control/delete$',
-        exp_views.delete, name='delete')
+	# Control room
+	url(r'^control/$',
+	    exp_views.exp_control_view, name='control'),
+	url(r'^control/random$',
+	    exp_views.random, name='random'),
+	url(r'^control/delete$',
+	    exp_views.delete, name='delete')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

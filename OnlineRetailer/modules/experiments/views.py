@@ -4,6 +4,37 @@ from django.contrib.auth.decorators import login_required
 from ..products.models import Product
 
 
+# Utility
+def vendor_uncertainty_level(new_product, level):
+	if level == 'H':
+		new_product.coeff = np.random.uniform(1, 1.5)
+		new_product.fake_quality = round(new_product.coeff * new_product.real_quality)
+	elif level == 'L':
+		new_product.coeff = np.random.uniform(1, 1.2)
+		new_product.fake_quality = round(new_product.coeff * new_product.real_quality)
+	return new_product
+
+
+def platform_detection_ability(new_product, ability):
+	if ability == 'L':
+		new_product.verified_quality = round(new_product.fake_quality)
+	elif ability == 'H':
+		new_product.percentage = np.random.uniform(0.01, 0.1, None)
+		new_product.verified_quality = round(new_product.real_quality + new_product.real_quality * new_product.percentage)
+	return new_product
+
+
+def price_determination(new_product, ability):
+	if ability == 'L':
+		new_product.price = round(new_product.fake_quality / 3.0)
+	elif ability == 'H':
+		if new_product.fake_quality >= new_product.verified_quality:
+			new_product.price = round(new_product.verified_quality / 3.0)
+		else:
+			new_product.price = round(new_product.fake_quality / 3.0)
+	return new_product
+
+
 @login_required
 def exp_control_view(request):
 	line_count = Product.objects.all().count()
@@ -12,63 +43,64 @@ def exp_control_view(request):
 
 @login_required
 def random(request):
-	# How to create new Product:
-	# one way: new_product = Product(price=10, title='Shoes', ....)
-	# second way: new_product = Product()    new_product.title='Shoes'
+	# Experiment 0
+	for i in range(1, 100):
+		new_product = Product(
+			title='Textbook ' + str(i),
+			real_quality=round(np.random.uniform(30, 60, None)),
+			amount=round(np.random.uniform(50, 70, None)),
+			experiment_num=0
+		)
 
-	# How to save your new product to databse:
-	# new_product.save()
+		new_product = vendor_uncertainty_level(new_product, 'L')
+		new_product = platform_detection_ability(new_product, 'H')
+		new_product = price_determination(new_product, 'H')
 
-	for i in range(1, 101):
-		new_product = Product()
-		new_product.title = 'Textbook ' + str(i)
-		new_product.real_quality = round(np.random.uniform(30, 60, None))
-		new_product.amount = round(np.random.uniform(50, 70, None))
+		new_product.save()
 
-		def vendor_uncertainty_level(level):
-			if level == 'H':
-				new_product.coeff = np.random.uniform(1, 1.5)
-				new_product.fake_quality = new_product.coeff * new_product.real_quality
-				return round(new_product.fake_quality)
-			elif level == 'L':
-				new_product.coeff = np.random.uniform(1, 1.2)
-				new_product.fake_quality = new_product.coeff * new_product.real_quality
-				return round(new_product.fake_quality)
-			else:
-				return 'Wrong information'
+	# Experiment 1
+	for i in range(1, 100):
+		new_product = Product(
+			title='Textbook ' + str(i),
+			real_quality=round(np.random.uniform(30, 60, None)),
+			amount=round(np.random.uniform(50, 70, None)),
+			experiment_num=1
+		)
 
-		# print (real_quality, vendor_uncertainty_level('L'))
-		new_product.fake_quality = vendor_uncertainty_level('L')
+		new_product = vendor_uncertainty_level(new_product, 'H')
+		new_product = platform_detection_ability(new_product, 'H')
+		new_product = price_determination(new_product, 'H')
 
-		def platform_detection_ability(ability):
-			if ability == 'L':
-				new_product.verified_quality = new_product.fake_quality
-				return round(new_product.verified_quality)
-			elif ability == 'H':
-				new_product.percentage = np.random.uniform(0.01, 0.1, None)
-				new_product.verified_quality = new_product.real_quality + new_product.real_quality * new_product.percentage
-				return round(new_product.verified_quality)
-			else:
-				return 'Wrong information'
+		new_product.save()
 
-		# print (platform_detection_ability('H'))
-		new_product.verified_quality = platform_detection_ability('H')
+	# Experiment 2
+	for i in range(1, 100):
+		new_product = Product(
+			title='Textbook ' + str(i),
+			real_quality=round(np.random.uniform(30, 60, None)),
+			amount=round(np.random.uniform(50, 70, None)),
+			experiment_num=2
+		)
 
-		def price_determination(ability):
-			if ability == 'L':
-				new_product.price = new_product.fake_quality / 3.0
-				return round(new_product.price)
-			elif ability == 'H':
-				if new_product.fake_quality >= new_product.verified_quality:
-					new_product.price = new_product.verified_quality / 3.0
-				else:
-					new_product.price = new_product.fake_quality / 3.0
-				return round(new_product.price, 2)
+		new_product = vendor_uncertainty_level(new_product, 'L')
+		new_product = platform_detection_ability(new_product, 'L')
+		new_product = price_determination(new_product, 'H')
 
-		new_product.price = price_determination('H')
-		# print (price_determination('H'))
-		# print(real_quality, claimed_quality, verified_quality, price)
-		i += 1
+		new_product.save()
+
+	# Experiment 3
+	for i in range(1, 100):
+		new_product = Product(
+			title='Textbook ' + str(i),
+			real_quality=round(np.random.uniform(30, 60, None)),
+			amount=round(np.random.uniform(50, 70, None)),
+			experiment_num=3
+		)
+
+		new_product = vendor_uncertainty_level(new_product, 'H')
+		new_product = platform_detection_ability(new_product, 'L')
+		new_product = price_determination(new_product, 'H')
+
 		new_product.save()
 	return redirect('control')
 

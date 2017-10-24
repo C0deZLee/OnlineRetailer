@@ -13,6 +13,8 @@ class Product(models.Model):
 	price = models.FloatField(default=0.0)
 	amount = models.IntegerField(default=0)
 
+	experiment_num = models.IntegerField(default=0)
+
 	# related fields
 	def __str__(self):
 		return self.title
