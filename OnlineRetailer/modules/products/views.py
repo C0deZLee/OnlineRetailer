@@ -15,6 +15,9 @@ def product_list_view(request):
 		request.session['repeat_count'] = 0
 		request.session['session_set'] = True
 	else:
+		if not request.session.get('repeat_count'):
+			request.session['repeat_count'] = 0
+
 		cart = request.session.get('cart', [])
 		exp_num = request.session['exp_num']
 		if request.session['repeat_count'] == 0:
