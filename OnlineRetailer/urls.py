@@ -44,7 +44,10 @@ urlpatterns = [
 	url(r'^control/random$',
 	    exp_views.random, name='random'),
 	url(r'^control/delete$',
-	    exp_views.delete, name='delete')
+	    exp_views.delete, name='delete'),
+	url(r'^control/clean',
+	    exp_views.clean_session, name='clean')
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

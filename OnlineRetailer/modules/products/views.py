@@ -12,30 +12,22 @@ def product_list_view(request):
 	if not request.session.get('session_set', False):
 		cart = request.session['cart'] = []
 		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
-		request.session['repeat_count'] = 0
+		request.session['repeat_count'] = 'Attempt 1'
 		request.session['session_set'] = True
 	else:
 		if not request.session.get('repeat_count'):
-			request.session['repeat_count'] = 0
-
+			request.session['repeat_count'] = 'Attempt 1'
 		cart = request.session.get('cart', [])
 		exp_num = request.session['exp_num']
-		if request.session['repeat_count'] == 0:
-			request.session['repeat_count'] = 1
-		elif request.session['repeat_count'] == 1:
-			request.session['repeat_count'] = 2
-		elif request.session['repeat_count'] == 2:
-			request.session['repeat_count'] = 3
-		else:
-			request.session['repeat_count'] = 4
-			setting = Settings.objects.first()
-			return render(request, 'confirmation.html',
-			              {'code'        : setting.finish_code,
-			               'title'       : 'Confirmation',
-			               'repeat_count': request.session['repeat_count']})
+
+	if request.session['repeat_count'] == 'Finished':
+		setting = Settings.objects.first()
+		return render(request, 'confirmation.html',
+		              {'code'        : setting.finish_code,
+		               'title'       : 'Confirmation',
+		               'repeat_count': request.session['repeat_count']})
 
 	products_all = Product.objects.filter(experiment_num=exp_num)
-
 	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List', 'repeat_count': request.session['repeat_count']})
 
 
@@ -78,6 +70,17 @@ def product_confirmation_view(request):
 				score += rank_bonus
 				new_record = Record(score=score, product_id=product['id'], created=timezone.now())
 				new_record.save()
+
+	if request.session['repeat_count'] == 'Attempt 1':
+		request.session['repeat_count'] = 'Attempt 2'
+	elif request.session['repeat_count'] == 'Attempt 2':
+		request.session['repeat_count'] = 'Attempt 3'
+	elif request.session['repeat_count'] == 'Attempt 3':
+		request.session['repeat_count'] = 'Attempt 4'
+	elif request.session['repeat_count'] == 'Attempt 4':
+		request.session['repeat_count'] = 'Attempt 5'
+	elif request.session['repeat_count'] == 'Attempt 5':
+		request.session['repeat_count'] = 'Finished'
 
 	return render(request, 'confirmation.html',
 	              {'code'        : setting.finish_code,

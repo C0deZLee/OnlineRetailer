@@ -109,3 +109,8 @@ def random(request):
 def delete(request):
 	Product.objects.all().delete()
 	return redirect('control')
+
+
+def clean_session(request):
+	request.session['session_set'] = False
+	return redirect('control')

@@ -14,10 +14,16 @@
                             <i class="fa fa-bullseye icon-bg op-1 icon-bg-l-ol icon-25x text-white"></i> <i class="fa fa-bullseye icon-bg op-1 icon-bg-r-ol icon-bg-b icon-25x text-white"></i>
                             <div class="p-4 text-center bg-danger">
                                 <h2 class="display-4 font-weight-normal text-uppercase text-white my-0 text-slab">
-                                    Attempt {{ repeat_count }}
+                                    {% if repeat_count == 'Attempt 1' %}
+                                        Attempt 1
+                                    {% elif repeat_count == 'Attempt 3' %}
+                                        Attempt 2
+                                    {% elif repeat_count == 'Attempt 5' %}
+                                        Attempt 3
+                                    {% endif %}
                                 </h2>
                                 <h4 class="text-white mb-0 text-slab">
-                                   Notice: You can select and only select ONE product!
+                                    Notice: You can select and only select ONE product!
                                 </h4>
 
                             </div>
