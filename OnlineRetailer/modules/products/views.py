@@ -8,24 +8,39 @@ from .models import Product
 from ..experiments.models import Settings, Record
 
 
+def read_view(request):
+	# if not request.session.get('session_set', False):
+	request.session['cart'] = []
+	request.session['exp_num'] = int(random.uniform(1, 3))
+	request.session['repeat_count'] = 'Attempt 1'
+	request.session['session_set'] = True
+
+	return render(request, 'read.html')
+
+
+def quiz_view(request):
+	if not request.session.get('session_set', False):
+		return redirect('read')
+
+	return render(request, 'quiz.html')
+
+
+def quiz_check_view(request):
+	if not request.session.get('session_set', False):
+		return redirect('read')
+
+	return render(request, 'quiz.html')
+
+
 def product_list_view(request):
 	if not request.session.get('session_set', False):
-		cart = request.session['cart'] = []
-		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
-		request.session['repeat_count'] = 'Attempt 1'
-		request.session['session_set'] = True
-	else:
-		if not request.session.get('repeat_count'):
-			request.session['repeat_count'] = 'Attempt 1'
-		cart = request.session.get('cart', [])
-		exp_num = request.session['exp_num']
+		return redirect('read')
+
+	cart = request.session.get('cart', [])
+	exp_num = request.session['exp_num']
 
 	if request.session['repeat_count'] == 'Finished':
-		setting = Settings.objects.first()
-		return render(request, 'confirmation.html',
-		              {'code'        : setting.finish_code,
-		               'title'       : 'Confirmation',
-		               'repeat_count': request.session['repeat_count']})
+		return redirect('confirm')
 
 	products_all = Product.objects.filter(experiment_num=exp_num)
 	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List', 'repeat_count': request.session['repeat_count']})
@@ -33,12 +48,9 @@ def product_list_view(request):
 
 def product_cart_view(request):
 	if not request.session.get('session_set', False):
-		cart = request.session['cart'] = []
-		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
-		request.session['session_set'] = True
-	else:
-		cart = request.session.get('cart', [])
-		exp_num = request.session['exp_num']
+		return redirect('read')
+
+	cart = request.session.get('cart', [])
 
 	total = 0
 	for product in cart:
@@ -49,13 +61,10 @@ def product_cart_view(request):
 
 def product_confirmation_view(request):
 	if not request.session.get('session_set', False):
-		cart = request.session['cart'] = []
-		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
-		request.session['session_set'] = True
-	else:
-		cart = request.session.get('cart', [])
-		exp_num = request.session['exp_num']
+		return redirect('read')
 
+	cart = request.session.get('cart', [])
+	exp_num = request.session['exp_num']
 	setting = Settings.objects.first()
 
 	score = 0
@@ -76,10 +85,6 @@ def product_confirmation_view(request):
 	elif request.session['repeat_count'] == 'Attempt 2':
 		request.session['repeat_count'] = 'Attempt 3'
 	elif request.session['repeat_count'] == 'Attempt 3':
-		request.session['repeat_count'] = 'Attempt 4'
-	elif request.session['repeat_count'] == 'Attempt 4':
-		request.session['repeat_count'] = 'Attempt 5'
-	elif request.session['repeat_count'] == 'Attempt 5':
 		request.session['repeat_count'] = 'Finished'
 
 	return render(request, 'confirmation.html',
@@ -93,15 +98,9 @@ def product_confirmation_view(request):
 
 def add_to_cart(request, item_id):
 	if not request.session.get('session_set', False):
-		cart = request.session['cart'] = []
-		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
-		request.session['session_set'] = True
-	else:
-		cart = request.session.get('cart', [])
-		exp_num = request.session['exp_num']
+		return redirect('read')
 
 	product = Product.objects.get(id=item_id)
-
 	request.session['cart'] = [product.json()]
 
 	return redirect('cart')
@@ -109,12 +108,9 @@ def add_to_cart(request, item_id):
 
 def remove_from_cart(request, item_id):
 	if not request.session.get('session_set', False):
-		cart = request.session['cart'] = []
-		exp_num = request.session['exp_num'] = int(random.uniform(1, 3))
-		request.session['session_set'] = True
-	else:
-		cart = request.session.get('cart', [])
-		exp_num = request.session['exp_num']
+		return redirect('read')
+
+	cart = request.session.get('cart', [])
 
 	product = Product.objects.get(id=item_id)
 	cart.remove(product.json())

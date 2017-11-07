@@ -1,179 +1,159 @@
 <!DOCTYPE html> {% load static %}
 <html lang="en">
 
-    <head>
-        <title>Online Retailer Experiment</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<head>
+    <title>Online Retailer Experiment</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-        <meta name="description" content="">
-        <meta name="author" content="Themelize.me">
+    <meta name="description" content="">
+    <meta name="author" content="Themelize.me">
 
-        <!-- Bootstrap 4.0.0-alpha.6 CSS via CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <!-- Bootstrap 4.0.0-alpha.6 CSS via CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 
-        <!-- Plugins required on all pages NOTE: Additional non-required plugins are loaded ondemand as of AppStrap 2.5 -->
+    <!-- Plugins required on all pages NOTE: Additional non-required plugins are loaded ondemand as of AppStrap 2.5 -->
 
-        <!-- Theme style -->
-        <link href="{% get_static_prefix %}css/theme-style.min.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link href="{% get_static_prefix %}css/theme-style.min.css" rel="stylesheet">
 
-        <!-- Shop UI CSS - required if using shopping cart or any shop pages -->
-        <link href="{% get_static_prefix %}css/theme-shop.min.css" rel="stylesheet">
+    <!-- Shop UI CSS - required if using shopping cart or any shop pages -->
+    <link href="{% get_static_prefix %}css/theme-shop.min.css" rel="stylesheet">
 
-        <!--Your custom colour override-->
-        <link href="#" id="colour-scheme" rel="stylesheet">
-
-        <!-- Your custom override -->
-        <link href="{% get_static_prefix %}css/custom-style.css" rel="stylesheet">
+    <!-- Optional: ICON SETS -->
+    <!-- Iconset: Font Awesome 4.7.0 via CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-        <!-- Optional: ICON SETS -->
-        <!-- Iconset: Font Awesome 4.7.0 via CDN -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Iconset: flag icons - http://lipis.github.io/flag-icon-css/ -->
-        <link href="{% get_static_prefix %}plugins/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
-        <!-- Iconset: ionicons - http://ionicons.com/ -->
-        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-        <!-- Iconset: Linearicons - https://linearicons.com/free -->
-        <link href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css" rel="stylesheet">
+    <!-- Le fav and touch icons - @todo: fill with your icons or remove -->
+    <link rel="shortcut icon" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/favicon.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/72x72.png">
+    <link rel="apple-touch-icon" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/default.png">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+
+    <!--Plugin: Retina.js (high def image replacement) - @see: http://retinajs.com/-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/retina.js/1.3.0/retina.min.js"></script>
+</head>
+
+<!-- ======== @Region: body ======== -->
+
+<body class="page page-shop header-compact-sticky page-shop-confirmation navbar-layout-navbar-below">
+
+<!-- @plugin: page loading indicator, delete to remove loader -->
 
 
-        <!-- Le fav and touch icons - @todo: fill with your icons or remove -->
-        <link rel="shortcut icon" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/favicon.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/114x114.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/72x72.png">
-        <link rel="apple-touch-icon" href="{% get_static_prefix %}{% get_static_prefix %}img/icons/default.png">
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+<a href="#content" id="top" class="sr-only">Skip to content</a>
 
-        <!--Plugin: Retina.js (high def image replacement) - @see: http://retinajs.com/-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/retina.js/1.3.0/retina.min.js"></script>
-    </head>
+<!-- ======== @Region: #header ======== -->
+<div id="header">
+    <!--Branding & Navigation Region-->
 
-    <!-- ======== @Region: body ======== -->
+    <div data-toggle="sticky">
 
-    <body class="page page-shop header-compact-sticky page-shop-confirmation navbar-layout-navbar-below">
-
-        <!-- @plugin: page loading indicator, delete to remove loader -->
-
-
-        <a href="#content" id="top" class="sr-only">Skip to content</a>
-
-        <!-- ======== @Region: #header ======== -->
-        <div id="header">
-            <!--Branding & Navigation Region-->
-
-            <div data-toggle="sticky">
-
-                <!--Header search region - hidden by default -->
-                <div class="header-search collapse" id="search">
-                    <form class="search-form container">
-                        <input type="text" name="search" class="form-control search" value="" placeholder="Search">
-                        <button type="button" class="btn btn-link"><span class="sr-only">Search </span><i
+        <!--Header search region - hidden by default -->
+        <div class="header-search collapse" id="search">
+            <form class="search-form container">
+                <input type="text" name="search" class="form-control search" value="" placeholder="Search">
+                <button type="button" class="btn btn-link"><span class="sr-only">Search </span><i
                         class="fa fa-search fa-flip-horizontal search-icon"></i></button>
-                        <button type="button" class="btn btn-link close-btn" data-toggle="search-form-close"><span
+                <button type="button" class="btn btn-link close-btn" data-toggle="search-form-close"><span
                         class="sr-only">Close </span><i class="fa fa-times search-icon"></i></button>
-                    </form>
+            </form>
+        </div>
+
+        <!--Header & Branding region-->
+        <div class="header">
+            <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.htm) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .flex-first or/and .flex-last classes to make an element show first or last within .header-inner or .headr-block elements -->
+            <div class="header-inner container">
+                <!--branding/logo -->
+                <div class="header-brand flex-first">
+                    <a class="header-brand-text" href="/list" title="Home">
+                        <h1>
+                            <span>Online</span>Retailer<span>.</span>
+                        </h1>
+                    </a>
+                    <div class="header-divider hidden-md-down"></div>
+                    <div class="header-slogan hidden-md-down">Experiment</div>
                 </div>
+                <!-- other header content -->
+                <div class="header-block flex-last">
+                    <div class="d-flex flex-column text-right hidden-md-down mr-2">
+                        <!--<h6 class="my-0 mb-1">
+                            <i class="fa fa-truck text-primary"></i> Free Worldwide Shipping
+                        </h6>
+                        <h6 class="my-0 text-muted font-weight-normal">
+                            <i class="fa fa-phone text-primary"></i> (+44) 1234567890
+                        </h6>-->
+                    </div>
 
-                <!--Header & Branding region-->
-                <div class="header">
-                    <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.htm) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .flex-first or/and .flex-last classes to make an element show first or last within .header-inner or .headr-block elements -->
-                    <div class="header-inner container">
-                        <!--branding/logo -->
-                        <div class="header-brand flex-first">
-                            <a class="header-brand-text" href="/" title="Home">
-                                <h1>
-                                    <span>Online</span>Retailer<span>.</span>
-                                </h1>
-                            </a>
-                            <div class="header-divider hidden-md-down"></div>
-                            <div class="header-slogan hidden-md-down">Experiment</div>
-                        </div>
-                        <!-- other header content -->
-                        <div class="header-block flex-last">
-                            <div class="d-flex flex-column text-right hidden-md-down mr-2">
-                                <!--<h6 class="my-0 mb-1">
-                                    <i class="fa fa-truck text-primary"></i> Free Worldwide Shipping
-                                </h6>
-                                <h6 class="my-0 text-muted font-weight-normal">
-                                    <i class="fa fa-phone text-primary"></i> (+44) 1234567890
-                                </h6>-->
-                            </div>
-
-                            <!--Search trigger -->
-                            <a href="#search" class="btn btn-icon btn-link header-btn float-right flex-last" data-toggle="search-form" data-target=".header-search"><i
+                    <!--Search trigger -->
+                    <a href="#search" class="btn btn-icon btn-link header-btn float-right flex-last" data-toggle="search-form" data-target=".header-search"><i
                             class="fa fa-search fa-flip-horizontal search-icon"></i></a>
 
-                            <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu - data-toggle="overlay" = Overlay Menu -->
-                            <a href="#top" class="btn btn-link btn-icon header-btn float-right hidden-lg-up" data-toggle="jpanel-menu" data-target=".navbar-main"
-                                data-direction="right"> <i class="fa fa-bars"></i> </a>
-                            <div class="header-divider hidden-md-down"></div>
+                    <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu - data-toggle="overlay" = Overlay Menu -->
+                    <a href="#top" class="btn btn-link btn-icon header-btn float-right hidden-lg-up" data-toggle="jpanel-menu" data-target=".navbar-main"
+                       data-direction="right"> <i class="fa fa-bars"></i> </a>
+                    <div class="header-divider hidden-md-down"></div>
 
-                            <!--Shopping cart-->
-                            <div class="dropdown dropdowns-no-carets dropdown-effect-fadeup float-right">
-                                <a href="/cart" class="btn btn-icon btn-inverse btn-link float-right cart-link">
+                    <!--Shopping cart-->
+                    <div class="dropdown dropdowns-no-carets dropdown-effect-fadeup float-right">
+                        <a href="/cart" class="btn btn-icon btn-inverse btn-link float-right cart-link">
                             <span class="cart-link-icon"> <i class="fa fa-shopping-cart"></i>
                                 <span class="sr-only">Cart</span>
                                 <span class="cart-link-count bg-primary text-white">{{ cart|length }}</span>
                             </span>
                         </a>
-                            </div>
-                            <!-- end of shopping cart -->
-                        </div>
                     </div>
+                    <!-- end of shopping cart -->
                 </div>
-
             </div>
         </div>
 
-        <!-- ======== @Region: #page-header ======== -->
-        <div id="page-header bg-grey-dark ">
-            <div class="container clearfix ">
-                <h3 class="mb-0 mt-3 float-md-left">
-                    {{ title }}
-                </h3>
-            </div>
+    </div>
+</div>
+
+<!-- ======== @Region: #page-header ======== -->
+<div id="page-header bg-grey-dark ">
+    <div class="container clearfix ">
+        <h3 class="mb-0 mt-3 float-md-left">
+            {{ title }}
+        </h3>
+    </div>
+</div>
+
+<!-- ======== @Region: #content ======== -->
+{% block content %}{% endblock content %}
+
+<!-- ======== @Region: #footer ======== -->
+<footer id="footer">
+    <div class="container">
+        <div class="subfooter text-sm text-center">
+            <p>OnlineRetailer Experiment | Copyright 2017 &copy;
+                Fiona
+            </p>
+            <ul class="list-inline footer-links">
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Contact Us</a></li>
+            </ul>
         </div>
-
-        <!-- ======== @Region: #content ======== -->
-        {% block content %}{% endblock content %}
-
-        <!-- ======== @Region: #footer ======== -->
-        <footer id="footer">
-            <div class="container">
-                <div class="subfooter text-sm text-center">
-                    <p>OnlineRetailer Experiment | Copyright 2017 &copy;
-                        Fiona
-                    </p>
-                    <ul class="list-inline footer-links">
-                        <li class="list-inline-item"><a href="#">Terms</a></li>
-                        <li class="list-inline-item"><a href="#">Privacy</a></li>
-                        <li class="list-inline-item"><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-        </footer>
+    </div>
+</footer>
 
 
-        <!--jQuery 3.2.1 via CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Tether 1.1.1 via CDN, needed for Bootstrap Tooltips & Popovers -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+<!--jQuery 3.2.1 via CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-        <!-- Bootstrap 4.0.0-alpha.6 JS via CDN -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<!-- Bootstrap 4.0.0-alpha.6 JS via CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 
-
-        <!-- JS plugins required on all pages NOTE: Additional non-required plugins are loaded ondemand as of AppStrap 2.5 To disable this and load plugin assets manually simple add data-plugins-manual=true to the body tag -->
-
-        <!--Custom scripts & AppStrap API integration -->
-        <script src="{% get_static_prefix %}js/custom-script.js"></script>
-        <!--AppStrap scripts mainly used to trigger libraries/plugins -->
-        <script src="{% get_static_prefix %}js/script.min.js"></script>
-    </body>
+<!--Custom scripts & AppStrap API integration -->
+<script src="{% get_static_prefix %}js/custom-script.js"></script>
+</body>
 
 </html>

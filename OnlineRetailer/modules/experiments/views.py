@@ -44,7 +44,7 @@ def exp_control_view(request):
 @login_required
 def random(request):
 	# Experiment 0
-	for i in range(1, 51):
+	for i in range(1, 21):
 		new_product = Product(
 			title='Textbook ' + str(i),
 			real_quality=round(np.random.uniform(30, 60, None)),
@@ -59,7 +59,7 @@ def random(request):
 		new_product.save()
 
 	# Experiment 1
-	for i in range(1, 51):
+	for i in range(1, 21):
 		new_product = Product(
 			title='Textbook ' + str(i),
 			real_quality=round(np.random.uniform(30, 60, None)),
@@ -74,7 +74,7 @@ def random(request):
 		new_product.save()
 
 	# Experiment 2
-	for i in range(1, 51):
+	for i in range(1, 21):
 		new_product = Product(
 			title='Textbook ' + str(i),
 			real_quality=round(np.random.uniform(30, 60, None)),
@@ -89,7 +89,7 @@ def random(request):
 		new_product.save()
 
 	# Experiment 3
-	for i in range(1, 51):
+	for i in range(1, 21):
 		new_product = Product(
 			title='Textbook ' + str(i),
 			real_quality=round(np.random.uniform(30, 60, None)),
