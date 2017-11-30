@@ -18,6 +18,34 @@ def read_view(request):
 	return render(request, 'read.html')
 
 
+def read1_view(request):
+	if not request.session.get('session_set', False):
+		return redirect('read')
+
+	return render(request, 'read1.html')
+
+
+def read2_view(request):
+	if not request.session.get('session_set', False):
+		return redirect('read')
+
+	return render(request, 'read2.html')
+
+
+def read3_view(request):
+	if not request.session.get('session_set', False):
+		return redirect('read')
+
+	return render(request, 'read3.html', {'exp_num': request.session['exp_num']})
+
+
+def read4_view(request):
+	if not request.session.get('session_set', False):
+		return redirect('read')
+
+	return render(request, 'read4.html')
+
+
 def quiz_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
@@ -69,13 +97,15 @@ def product_confirmation_view(request):
 
 	score = 0
 	rank_bonus = 0.0
+	rank_num = 0
 
 	for product in cart:
 		score += product['price'] / product['real_quality']
 
 		for index, item in enumerate(Product.objects.filter(experiment_num=exp_num).order_by('real_quality')):
 			if str(item.title) == str(product['title']):
-				rank_bonus = float(float(index) / 50.0)
+				rank_num = index
+				rank_bonus = float(float(index) / 20.0)
 				score += rank_bonus
 				new_record = Record(score=score, product_id=product['id'], created=timezone.now())
 				new_record.save()
@@ -93,6 +123,7 @@ def product_confirmation_view(request):
 	               'cart'        : cart,
 	               'score'       : score,
 	               'rank'        : rank_bonus,
+	               'rank_num'    : rank_num,
 	               'repeat_count': request.session['repeat_count']})
 
 

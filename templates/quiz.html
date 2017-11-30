@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load divide_by %}
+{% block content %}
+
+    <!-- ======== @Region: #content ======== -->
+    <div id="content" class="py-5">
+        <div class="container">
+            <div class="mb-6">
+                <h4 class="text-center text-danger"><strong>Please answer the following question thoughtfully. </strong></h4>
+                <br>
+                <p>1. Vendors can exaggerate the quality of the book they are selling with up to 20% </p>
+                <p>
+                    <input type="radio" name="q1" id="q1" value="T"> True
+                    <input class="ml-3" type="radio" name="q1" id="q1" value="F"> False
+                </p>
+                <p>2. Vendors are more likely to exaggerate the quality of the book they are selling with 10% than not at all</p>
+                <p>
+                    <input type="radio" name="q2" id="q2" value="T"> True
+                    <input class="ml-3" type="radio" name="q2" id="q2" value="F"> False
+                </p>
+                <p>3. Question3 </p>
+                <p>
+                    <input type="radio" name="q3" id="q3" value="T"> True
+                    <input class="ml-3" type="radio" name="q3" id="q3" value="F"> False
+                </p>
+                <p>4. Question4 </p>
+                <p>
+                    <input type="radio" name="q4" id="q4" value="T"> True
+                    <input class="ml-3" type="radio" name="q4" id="q4" value="F"> False
+                </p>
+            </div>
+            <div class="text-center">
+                <button id="nextb" name="nextb"
+                        class="btn btn-primary btn-rounded btn-lg mr-3">
+                    Continue
+                </button>
+            </div>
+            <script>
+                document.getElementById('nextb').addEventListener('click', function () {
+                    var ans1, ans2, ans3, ans4;
+                    var options = document.getElementsByName("q1");
+                    if (options[0].checked)
+                        ans1 = options[0].value;
+                    else
+                        ans1 = options[1].value;
+
+                    options = document.getElementsByName("q2");
+                    if (options[0].checked)
+                        ans2 = options[0].value;
+                    else
+                        ans2 = options[1].value;
+
+                    options = document.getElementsByName("q3");
+                    if (options[0].checked)
+                        ans3 = options[0].value;
+                    else
+                        ans3 = options[1].value;
+
+                    options = document.getElementsByName("q4");
+                    if (options[0].checked)
+                        ans4 = options[0].value;
+                    else
+                        ans4 = options[1].value;
+                    if (ans1 === "T" && ans2 === "T" && ans3 === "T" && ans4 === "T")
+                        window.location.replace('http://127.0.0.1:8000/list');
+                    else
+                        alert("Wrong Answer!");
+                });
+            </script>
+        </div>
+    </div>
+
+
+{% endblock %}
