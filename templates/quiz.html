@@ -65,9 +65,9 @@
                     else
                         ans4 = options[1].value;
                     if (ans1 === "T" && ans2 === "T" && ans3 === "T" && ans4 === "T")
-                        window.location.replace('http://127.0.0.1:8000/list');
+                        window.location.replace('http://ec2-107-22-152-68.compute-1.amazonaws.com/list');
                     else
-                        alert("Wrong Answer!");
+                        window.location.replace('http://ec2-107-22-152-68.compute-1.amazonaws.com?wrong=true');
                 });
             </script>
         </div>

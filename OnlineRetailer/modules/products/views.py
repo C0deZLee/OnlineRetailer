@@ -14,8 +14,10 @@ def read_view(request):
 	request.session['exp_num'] = int(random.uniform(1, 3))
 	request.session['repeat_count'] = 'Attempt 1'
 	request.session['session_set'] = True
-
-	return render(request, 'read.html')
+	ctx = {}
+	if request.GET.get('wrong'):
+		ctx['wrong'] = True
+	return render(request, 'read.html', ctx)
 
 
 def read1_view(request):
