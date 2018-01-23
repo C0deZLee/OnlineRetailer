@@ -26,12 +26,12 @@ def platform_detection_ability(new_product, ability):
 
 def price_determination(new_product, ability):
 	if ability == 'L':
-		new_product.price = round(new_product.fake_quality / 3.0)
+		new_product.price = round(new_product.fake_quality ** 0.75)
 	elif ability == 'H':
 		if new_product.fake_quality >= new_product.verified_quality:
-			new_product.price = round(new_product.verified_quality / 3.0)
+			new_product.price = round(new_product.verified_quality ** 0.75)
 		else:
-			new_product.price = round(new_product.fake_quality / 3.0)
+			new_product.price = round(new_product.fake_quality ** 0.75)
 	return new_product
 
 
