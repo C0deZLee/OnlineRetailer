@@ -1,46 +1,68 @@
-{% extends 'base.html' %}
-{% load divide_by %}
-{% block content %}
+{% extends 'base.html' %} {% load divide_by %} {% block content %}
 
-    <!-- ======== @Region: #content ======== -->
-    <div id="content" class="py-5">
-        <div class="container">
-            <div class="mb-6">
-                <p class="text-center"><strong>Choosing a pre-used book</strong></p>
-                {% if exp_num == 1 %}
-                    <p> To help your selection, each vendor indicates the price and quality condition of the book that he or she is offering for sale. Prices vary between 10 and 30 dollars. Quality
-                        also
-                        varies. The quality score is provided on a 100 point scale (0= extremely poor quality; 100 = quality is as new). However, the quality score claimed by the vendor may not be
-                        fully
-                        accurate. </p>
-                    <p> Vendors may exaggerate the quality of the book by a factor anywhere in the range of <b>0-20%</b>. This means that the claimed quality score may be up to 20% higher than the
-                        true
-                        quality
-                        of the book. The different exaggerated scores are provided with EQUAL probability by all vendors. For example, a true quality score of 50 could be exaggerated to any score
-                        between
-                        50- 60 by a vendor and the possibility that a vendor exaggerates the score to 51 or 59 is equally likely. You will not be able to observe the true quality score until you have
-                        completed the purchase. </p>
-                    <p> Some online market places also independently verify the quality of the books that the vendors offer for sale. The platform that you are using,<b>has replaced the vendor quality
-                        rating with its own independent quality rating that reduces the quality reporting error to anywhere between 0 and 10%.</b> Thus, the quality score displayed on this site is the
-                        platform verified score, which on average is closer to the true score. </p>
-                {% elif exp_num == 2 %}
-                    <p>Exp2</p>
-                {% elif exp_num == 3 %}
-                    <p>Exp3</p>
-                {% elif exp_num == 4 %}
-                    <p>Exp4</p>
-                {% endif %}
-            </div>
-            <div class="text-center">
-                <a href="/read2"
-                   class="btn btn-secondary btn-rounded btn-lg mr-3">
-                    Back</a>
-                <a href="/read4"
-                   class="btn btn-primary btn-rounded btn-lg mr-3">
-                    Continue</a>
-            </div>
+<!-- ======== @Region: #content ======== -->
+<div id="content" class="py-5">
+    <div class="container">
+        <div class="mb-6">
+            <p class="text-center">
+                <strong>Choosing a pre-used book</strong>
+            </p>
+            <p> To help your selection, each vendor indicates the price and quality condition of the book that he or she is offering
+                for sale. Prices vary between 10 and 30 dollars. Quality also varies. The quality score is provided on a
+                100 point scale (0= extremely poor quality; 100 = quality is as new). However, the quality score claimed
+                by the vendor may not be fully accurate. </p>
+            {% if exp_num == 1 %}
+            <p> Vendors may exaggerate the quality of the book by a factor anywhere in the range of
+                <b>0-20%</b>. This means that the claimed quality score may be up to 20% higher than the true quality of the
+                book. The different exaggerated scores are provided with EQUAL probability by all vendors. For example, a
+                true quality score of 50 could be exaggerated to any score between 50- 60 by a vendor and the possibility
+                that a vendor exaggerates the score to 51 or 59 is equally likely. You will not be able to observe the true
+                quality score until you have completed the purchase. </p>
+            <p> Some online market places also independently verify the quality of the books that the vendors offer for sale.
+                The platform that you are using,
+                <b>has replaced the vendor quality rating with its own independent quality rating that reduces the quality reporting
+                    error to anywhere between 0 and 10%.</b> Thus, the quality score displayed on this site is the platform
+                verified score, which on average is closer to the true score. </p>
+            {% elif exp_num == 2 %}
+            <p>Vendors may exaggerate the quality of the book by a factor anywhere in the range of
+                <b>0-50%</b>. This means that the claimed quality score may be up to
+                <b>50%</b> higher than the true quality. </p>
+            <p>For example, a true quality score 50 could be exaggerated to any score between 50- 75 with EQUAL probability.Thus,
+                this vendor may exaggerate the score to 51 or 74 equally likely. You will not be able to observe the true
+                quality score until you complete the purchase.</p>
+            <p>Sone online market places also independently verify the quality of the books that the vendors offer for sale.
+                The platform that you are using, has replaced the vendor quality rating with its own independent quality
+                rating that reduces the quality reporting error to anywhere between 0 and 10%. Thus, the quality score displayed
+                on this site is the platform verified score. </p>
+            {% elif exp_num == 3 %}
+            <p>Vendors may exaggerate the quality of the book by a factor anywhere in the range of 0-20%. This means that the
+                claimed quality score may be up to 20% higher than the true quality. For example, a true quality score 50
+                could be exaggerated to any score between 50- 60 with EQUAL probability. Thus, this vendor may exaggerate
+                the score to 51 or 59 equally likely. You will not be able to observe the true quality score until you complete
+                the purchase.</p>
+            <p>Sone online market places also independently verify the quality of the books that the vendors offer for sale.
+                Unfortunately, the platform that you are using DOES NOT do this and simply presents the vendor claimed quality
+                scores. </p>
+            {% elif exp_num == 4 %}
+            <p>Vendors may exaggerate the quality of the book by a factor anywhere in the range of 0-50%. This means that the
+                claimed quality score may be up to 50% higher than the true quality. For example, a true quality score 50
+                could be exaggerated to any score between 50- 75 with EQUAL probability. Thus, this vendor may exaggerate
+                the score to 51 or 74 equally likely. You will not be able to observe the true quality score until you complete
+                the purchase.</p>
+            <p>Sone online market places also independently verify the quality of the books that the vendors offer for sale.
+                Unfortunately, the platform that you are using DOES NOT do this and simply presents the vendor claimed quality
+                scores.
+            </p>
+            {% endif %}
+        </div>
+        <div class="text-center">
+            <a href="/read2" class="btn btn-secondary btn-rounded btn-lg mr-3">
+                Back</a>
+            <a href="/read4" class="btn btn-primary btn-rounded btn-lg mr-3">
+                Continue</a>
         </div>
     </div>
+</div>
 
 
 {% endblock %}

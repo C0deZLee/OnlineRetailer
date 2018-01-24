@@ -84,7 +84,7 @@ def random(request):
 
 		new_product = vendor_uncertainty_level(new_product, 'L')
 		new_product = platform_detection_ability(new_product, 'L')
-		new_product = price_determination(new_product, 'H')
+		new_product = price_determination(new_product, 'L')
 
 		new_product.save()
 
@@ -99,7 +99,7 @@ def random(request):
 
 		new_product = vendor_uncertainty_level(new_product, 'H')
 		new_product = platform_detection_ability(new_product, 'L')
-		new_product = price_determination(new_product, 'H')
+		new_product = price_determination(new_product, 'L')
 
 		new_product.save()
 	return redirect('control')
