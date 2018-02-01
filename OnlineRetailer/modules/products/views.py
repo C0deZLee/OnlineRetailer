@@ -14,10 +14,7 @@ def read_view(request):
 	request.session['exp_num'] = int(random.uniform(1, 3))
 	request.session['repeat_count'] = 'Attempt 1'
 	request.session['session_set'] = True
-	ctx = {}
-	if request.GET.get('wrong'):
-		ctx['wrong'] = True
-	return render(request, 'read.html', ctx)
+	return render(request, 'read.html')
 
 
 def read1_view(request):
@@ -44,8 +41,10 @@ def read3_view(request):
 def read4_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
-
-	return render(request, 'read4.html')
+	ctx = {}
+	if request.GET.get('wrong'):
+		ctx['wrong'] = True
+	return render(request, 'read4.html', ctx)
 
 
 def quiz_view(request):
@@ -92,24 +91,40 @@ def product_cart_view(request):
 def product_confirmation_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
+	user_ip = ''
+
+	if request.META.get('HTTP_X_FORWARDED_FOR'):
+		user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+	else:
+		user_ip = request.META.get('REMOTE_ADDR')
 
 	cart = request.session.get('cart', [])
 	exp_num = request.session['exp_num']
 	setting = Settings.objects.first()
 
-	score = 0
 	rank_bonus = 0.0
-	rank_num = 0
+	raw_score = 0.0
+	total_score = 0.0
 
 	for product in cart:
-		score += product['price'] / product['real_quality']
-
+		raw_score = product['price'] / product['real_quality']
+		raw_score = float(format(raw_score, '.2f'))
 		for index, item in enumerate(Product.objects.filter(experiment_num=exp_num).order_by('real_quality')):
 			if str(item.title) == str(product['title']):
-				rank_num = index
+				# rank_num = index
 				rank_bonus = float(float(index) / 20.0)
-				score += rank_bonus
-				new_record = Record(score=score, product_id=product['id'], created=timezone.now())
+				total_score = raw_score + rank_bonus
+				total_score = format(total_score, '.2f')
+				new_record = Record(
+					experiment_num=request.session['exp_num'],
+					user_ip=user_ip,
+					product_id=product['id'],
+					product_fake_quality=product['fake_quality'],
+					product_real_quality=product['real_quality'],
+					raw_score=raw_score,
+					bonus=rank_bonus,
+					total_score=total_score,
+					created=timezone.now())
 				new_record.save()
 
 	if request.session['repeat_count'] == 'Attempt 1':
@@ -123,9 +138,9 @@ def product_confirmation_view(request):
 	              {'code'        : setting.finish_code,
 	               'title'       : 'Confirmation',
 	               'cart'        : cart,
-	               'score'       : score,
+	               'total_score' : total_score,
 	               'rank'        : rank_bonus,
-	               'rank_num'    : rank_num,
+	               'raw_score'   : raw_score,
 	               'repeat_count': request.session['repeat_count']})
 
 

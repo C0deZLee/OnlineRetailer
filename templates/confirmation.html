@@ -21,46 +21,26 @@
                 <table class="table table-responsive mb-0 cart-table cart-table-summary">
                     <thead>
                     <tr>
-                        <th class="w-25">Item</th>
-                        <th class="w-25">Price</th>
-                        <th class="w-25">Real Quality</th>
-                        <th class="w-25">Fake Quality</th>
-                        <th class="w-25">Rank Bonus</th>
+                        <th class="w-30">Item</th>
+                        <th class="w-30">Price</th>
+                        <th class="w-30">Price / Real Quality</th>
+                        <th class="w-35">Final Score</th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- Cart item -->
                     {% for item in cart %}
                         <tr>
-                            <td class="w-25"><span class="font-weight-bold">{{ item.title }}</span></td>
-                            <td class="w-25"> ${{ item.price }} </td>
-                            <td class="w-25"><span class="font-weight-bold">{{ item.real_quality }}</span></td>
-                            <td class="w-25"> {{ item.fake_quality }}</td>
-                            <td class="w-25"><span class="font-weight-bold"> {{ rank }} </span></td>
+                            <td class="w-30">{{ item.title }}</td>
+                            <td class="w-30">${{ item.price }}</td>
+                            <td class="w-30">{{ raw_score }}</td>
+                            <td class="w-35"><span class="font-weight-bold"> {{ total_score }} </span></td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
                 <hr class="my-4 hr-lg"/>
-                <div class="cart-content-footer">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h6 class="text-muted mb-3">
-                                If you have questions about the experiment please email us at example@example.com.
-                            </h6>
-                        </div>
-                        <div class="col-md-8 text-md-right mt-3 mt-md-0">
-                            <div class="cart-content-totals">
-                                <hr class="my-3 w-50 ml-0 ml-md-auto mr-md-0"/>
-                                <h3>
-                                    Score: <span class="text-primary">{{ score }}</span>
-                                </h3>
-                                <hr class="my-3 w-50 ml-0 ml-md-auto mr-md-0"/>
-                            </div>
-                            <!-- Proceed to checkout -->
-                        </div>
-                    </div>
-                </div>
+
             {% endif %}
             {% if repeat_count != 'Finished' %}
                 <div class="text-center">
