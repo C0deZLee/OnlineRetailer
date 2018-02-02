@@ -10,30 +10,26 @@
                 <table class="table table-responsive mb-0 cart-table">
                     <thead>
                     <tr>
-                        <th class="w-5"></th>
-                        <th class="w-10"></th>
-                        <th class="w-30">Item</th>
-                        <th class="w-30">Quality</th>
-                        <th class="w-30">Price</th>
+                        <th class="w-50">Item</th>
+                        <th class="w-50">Quality</th>
+                        <th class="w-50">Price</th>
                         <!--<th class="w-20">Quantity</th>-->
-                        <th class="w-20 text-md-right">Total</th>
+                        {#                        <th class="w-20 text-md-right">Total</th>#}
                     </tr>
                     </thead>
                     <tbody>
                     {% for product in cart %}
-                        <!-- Cart item -->
-                        <td>
-                        <td class="text-left align-middle">
-                            <a href="/remove/{{ product.id }}" class="close cart-remove"> <i class="fa fa-times"></i> </a>
-                        </td>
+                        <tr>
+                            <td>
+                                {{ product.title }}
+                            </td>
+                            <td>
+                                {{ product.fake_quality }}
+                            </td>
+                            <td class="text-left">
+                                <span class="font-weight-bold">${{ product.price }}</span>
+                            </td>
 
-                        <td><span class="font-weight-bold">{{ product.title }}</span></td>
-                        <td>
-                            {{product.fake_quality}}
-                        </td>
-                        <td class="text-left">${{ product.price }}</td>
-
-                        <td class="text-md-right"><span class="font-weight-bold">${{ product.price }}</span></td>
                         </tr>
                     {% endfor %}
                     </tbody>

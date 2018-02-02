@@ -34,17 +34,17 @@ def read2_view(request):
 def read3_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
-
-	return render(request, 'read3.html', {'exp_num': request.session['exp_num']})
+	ctx = {'exp_num': request.session['exp_num']}
+	if request.GET.get('wrong'):
+		ctx['wrong'] = True
+	return render(request, 'read3.html', ctx)
 
 
 def read4_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
-	ctx = {}
-	if request.GET.get('wrong'):
-		ctx['wrong'] = True
-	return render(request, 'read4.html', ctx)
+
+	return render(request, 'read4.html')
 
 
 def quiz_view(request):
@@ -91,7 +91,6 @@ def product_cart_view(request):
 def product_confirmation_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
-	user_ip = ''
 
 	if request.META.get('HTTP_X_FORWARDED_FOR'):
 		user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -127,6 +126,8 @@ def product_confirmation_view(request):
 					created=timezone.now())
 				new_record.save()
 
+	page_title = request.session['repeat_count'] + ' Result'
+
 	if request.session['repeat_count'] == 'Attempt 1':
 		request.session['repeat_count'] = 'Attempt 2'
 	elif request.session['repeat_count'] == 'Attempt 2':
@@ -136,7 +137,7 @@ def product_confirmation_view(request):
 
 	return render(request, 'confirmation.html',
 	              {'code'        : setting.finish_code,
-	               'title'       : 'Confirmation',
+	               'title'       : page_title,
 	               'cart'        : cart,
 	               'total_score' : total_score,
 	               'rank'        : rank_bonus,
