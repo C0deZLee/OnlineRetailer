@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- ======== @Region: #content ======== -->
+    <div id="content" class="py-5">
+        <form class="container" action="/survey/" method="post">
+            {% csrf_token %}
+            {% if code %}
+                Your finish code is: {{ code }}{{ rank }}
+            {% else %}
+                <div class="mb-6">
+                    <div class="form-group">
+                        <label for="clarity">Please rate the clarity of the instructions for this experiment from 0 to 10 (0="not clear at all" to 10="very clear") </label>
+                        <select class="form-control" name="clarity">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="satisfied">
+                            Please rate how satisfied you are with the book you selected in the experiment on a scale from 0 to 10 (0 = "not satisfied at all" to 10 = "very satisfied."
+                        </label>
+                        <select class="form-control" name="satisfied">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">
+                            Your Gender
+                        </label>
+                        <select class="form-control" name="gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">
+                            Your Age
+                        </label>
+                        <input type="number" class="form-control" name="age">
+                    </div>
+                    <div class="form-group">
+                        <label for="language">
+                            Language most commonly spoken at home with your family
+                        </label>
+                        <select class="form-control" name="language">
+                            <option>English</option>
+                            <option>Other languages</option>
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+            {% if not code %}
+                <div class="text-center">
+                    <button type="submit"
+                            class="btn btn-primary btn-rounded btn-lg mr-3">
+                        Submit Survey and get finish code
+                    </button>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+
+{% endblock %}

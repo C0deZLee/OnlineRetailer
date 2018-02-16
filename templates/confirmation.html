@@ -11,13 +11,12 @@
                     <h3>
                         The survey has been successfully finished!
                     </h3>
-                    <h4 class="font-weight-normal">
-                        Your finish code is: {{ code }}{{ rank_num }}
-                    </h4>
-                    <p>Now you can return to AMT to finish the survey.</p>
+                    <a class="font-weight-normal" href="/survey">
+                        Please click here to get your finish code
+                    </a>
                 </div>
             {% endif %}
-            {% if cart %}
+            {% if product %}
                 <table class="table table-responsive mb-0 cart-table cart-table-summary">
                     <thead>
                     <tr>
@@ -29,14 +28,12 @@
                     </thead>
                     <tbody>
                     <!-- Cart item -->
-                    {% for item in cart %}
-                        <tr>
-                            <td>{{ item.title }}</td>
-                            <td>${{ item.price }}</td>
-                            <td>{{ raw_score }}</td>
-                            <td><span class="font-weight-bold"> {{ total_score }} </span></td>
-                        </tr>
-                    {% endfor %}
+                    <tr>
+                        <td>{{ product.title }}</td>
+                        <td>${{ product.price }}</td>
+                        <td>{{ raw_score }}</td>
+                        <td><span class="font-weight-bold"> {{ total_score }} </span></td>
+                    </tr>
                     </tbody>
                 </table>
                 <hr class="my-4 hr-lg"/>

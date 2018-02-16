@@ -5,57 +5,67 @@
     <!-- ======== @Region: #content ======== -->
     <div id="content" class="py-5">
         <div class="container">
-            <div class="mb-6">
-                <p class="text-center">Alberta School of Business, University of College London</p>
-                <p class="text-center"><strong>CONSENT FORM</strong></p>
-                <p class="text-center">Consumer Decision Making</p>
-                <p class="text-center">Researcher: Professor Yongdong Liu, Professor Benedict Dellaert</p>
-                <b>Introduction</b>
-                <p> You are invited to take part in an academic research study being conducted by Professor Benedict Dellaert and Professor Yongdong Liu at University College of London. Your
-                    participation in this study is voluntary and you may withdraw from the study at any time. The study is described below. This description tells you about the risks, inconvenience,
-                    or discomfort which you might experience. Participating in the study might not benefit you, but we might learn things that will benefit others. You should discuss any questions you
-                    have about this study with Professor Benedict Dellaert and Professor Yongdong Liu.</p>
-                <p> The purpose of this study is to understand more about consumer decision-making.</p>
-                <b>Purpose of the study</b>
-                <p>The purpose of this study is to understand more about consumer decision-making.</p>
+            {% if not wrong_twice %}
+                <div class="mb-6">
+                    <p class="text-center">University College London<br>
+                        UCL School of Management
+                    </p>
+                    <p class="text-center"><strong>CONSENT FORM</strong></p>
+                    <p class="text-center">Consumer Decision Making</p>
+                    <p class="text-center">Researcher: Professor Yongdong Liu, Professor Benedict Dellaert</p>
+                    <b>Introduction</b>
+                    <p>You are invited to take part in an academic research study being conducted by researchers at Erasmus University Rotterdam and University College of London. Your participation in
+                        this study is voluntary and you may withdraw from the study at any time. The study is described as below. Participating in the study might not benefit you, but we might learn
+                        things that will benefit others. </p>
+                    <b>Purpose of the study</b>
+                    <p>The purpose of this study is to understand how consumers make decisions on purchasing products.</p>
 
-                <b>Study design</b>
-                <p>This study is designed to test theories related to how consumers form preferences about products. Information about how people form preferences will be collected from approximately 400 participants.</p>
-                <b>Who can participate in the study</b>
-                <p>You can participate in the study if you are an adult registered with MTurk Systems.</p>
-                <p>Note: In order for you to get through the study smoothly, it is important that you have a full computer or laptop display. It would be highly inconvenient and frustrating for you to
-                    attempt to do the study on a device with a small display (example: smartphones and tablets).</p>
-                <b>Who will be conducting the research</b>
-                <p>All aspects of this research will be conducted by Professor Yongdong Liu, Professor Benedict Dellaert.</p>
-                <b>What you will be asked to do</b>
-                <p>You will first be asked to make a decision. The study will take less than 10 minutes to complete.</p>
-                <b>Possible risks and discomforts</b>
-                <p>Minimal risks, which may include fatigue or eye strain, may occur. The risks or discomforts anticipated are not beyond what you may expect to experience in your daily lives.</p>
-                <b>Possible benefits</b>
-                <p>There are no direct benefits anticipated, but you may gain insights into your own consumer decision-making.</p>
-                <b>Compensation/Reimbursement</b>
-                <p>You will receive <strong>$0.80</strong> as the compensation of your participation in this study. Once you complete the study, you will receive your paycode. <b class="text-danger">You
-                    MUST enter the paycode correctly in order to receive your compensation.</b></p>
-                <p><b>Confidentiality & Anonymity</b></p>
-                <p>Your responses are anonymous and thus results will be reported with no reference to you specifically. No information that could allow the researcher to identify you personally will
-                    be collected. Therefore, your responses cannot be linked to your identity. The MTurk system protects your privacy by making sure that you will only be identified to researchers
-                    with a unique numeric code that the system will assign, not by your name.</p>
-                <p>Once the study has been completed, all data files will be stored on an external hard drive in Professor Liu and Professor Dellaert’s office for a period of 5 years, post-publication as per University of College London policy.</p>
-                <b>Questions or Concerns</b>
-                <p>If you have any questions regarding the study, please contact the study administrator at xxxxx@xxx.com</p>
-                <b>Consent</b>
-                <p>Please click on the <b>I AGREE</b> button below, if you have understood to your satisfaction the information regarding participation in the research project, that you are aware that all
-                    records are entirely confidential and that you may discontinue participation at any point in the study, and that you agree to participate.</p>
+                    <b>Who can participate in the study</b>
+                    <p>You can participate in the study if you are an adult registered with MTurk Systems.</p>
+                    <p>Note: In order for you to get through the study smoothly, it is important that you have a full computer or laptop display. It would be highly inconvenient and frustrating for
+                        you to
+                        attempt to do the study on a device with a small display (example: smartphones and tablets).</p>
+                    <b>What you will be asked to do</b>
+                    <p>You will be asked to make one or more hypothetical purchase decisions, followed by a short survey in the end. The study will take less than 10 minutes to complete.</p>
+                    <b>Possible risks and discomforts</b>
+                    <p>Minimal risks, which may include fatigue or eye strain, may occur. The risks or discomforts anticipated are not beyond what you may expect to experience in your daily lives.</p>
+                    <b>Possible risks and discomforts</b>
+                    <p>There are no direct benefits anticipated, but you may gain insights into your own consumer decision-making.</p>
+                    <b>Compensation/Reimbursement</b>
+                    <p>You will receive <b>$0.40</b> as the compensation of your participation in this study, plus a bonus up to a maximum of $0.40. Once you complete the study, you will receive your
+                        paycode.
+                        You MUST enter the paycode correctly in order to receive your compensation.</p>
+                    <b>Confidentiality & Anonymity</b>
+                    <p>Your responses are anonymous and thus results will be reported with no reference to you specifically. No information that could allow the researcher to identify you personally
+                        will be collected. Therefore, your responses cannot be linked to your identity. The MTurk system protects your privacy by making sure that you will only be identified to
+                        researchers with a unique numeric code that the system will assign, not by your name.</p>
+                    <p>Once the study has been completed, all data files will be stored on a server at University College London for a period of 5 years, post-publication as per Erasmus University
+                        Rotterdam and University of College London policy.</p>
+                    <b>Questions or Concerns</b>
+                    <p>If you have any questions regarding the study, please contact the study administrator at ucznliu@ucl.ac.uk</p>
+                    <b>Consent</b>
+                    <p>Please click on the <b>I AGREE</b> button below, if you have understood to your satisfaction the information regarding participation in the research project, that you are aware
+                        that all records are entirely confidential and that you may discontinue participation at any point in the study, and that you agree to participate.</p>
 
-            </div>
-            <div class="text-center">
-                <a href="/read1"
-                   class="btn btn-primary btn-rounded btn-lg mr-3">
-                    I AGREE</a>
-                <a href="#"
-                   class="btn btn-secondary btn-rounded btn-lg">
-                    I DO NOT AGREE</a>
-            </div>
+                </div>
+            {% else %}
+                <div class="mb-6">
+                    <h3 class="text-center text-danger">
+                        <strong>You failed quiz twice.</strong>
+                    </h3>
+                </div>
+            {% endif %}
+            {% if not wrong_twice %}
+
+                <div class="text-center">
+                    <a href="/read1"
+                       class="btn btn-primary btn-rounded btn-lg mr-3">
+                        I AGREE</a>
+                    <a href="#"
+                       class="btn btn-secondary btn-rounded btn-lg">
+                        I DO NOT AGREE</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 

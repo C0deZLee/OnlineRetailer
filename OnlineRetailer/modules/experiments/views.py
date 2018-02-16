@@ -43,21 +43,6 @@ def exp_control_view(request):
 
 @login_required
 def random(request):
-	# Experiment 0
-	for i in range(1, 21):
-		new_product = Product(
-			title='Textbook ' + str(i),
-			real_quality=round(np.random.uniform(30, 60, None)),
-			amount=round(np.random.uniform(50, 70, None)),
-			experiment_num=0
-		)
-
-		new_product = vendor_uncertainty_level(new_product, 'L')
-		new_product = platform_detection_ability(new_product, 'H')
-		new_product = price_determination(new_product, 'H')
-
-		new_product.save()
-
 	# Experiment 1
 	for i in range(1, 21):
 		new_product = Product(
@@ -67,7 +52,7 @@ def random(request):
 			experiment_num=1
 		)
 
-		new_product = vendor_uncertainty_level(new_product, 'H')
+		new_product = vendor_uncertainty_level(new_product, 'L')
 		new_product = platform_detection_ability(new_product, 'H')
 		new_product = price_determination(new_product, 'H')
 
@@ -82,9 +67,9 @@ def random(request):
 			experiment_num=2
 		)
 
-		new_product = vendor_uncertainty_level(new_product, 'L')
-		new_product = platform_detection_ability(new_product, 'L')
-		new_product = price_determination(new_product, 'L')
+		new_product = vendor_uncertainty_level(new_product, 'H')
+		new_product = platform_detection_ability(new_product, 'H')
+		new_product = price_determination(new_product, 'H')
 
 		new_product.save()
 
@@ -95,6 +80,21 @@ def random(request):
 			real_quality=round(np.random.uniform(30, 60, None)),
 			amount=round(np.random.uniform(50, 70, None)),
 			experiment_num=3
+		)
+
+		new_product = vendor_uncertainty_level(new_product, 'L')
+		new_product = platform_detection_ability(new_product, 'L')
+		new_product = price_determination(new_product, 'L')
+
+		new_product.save()
+
+	# Experiment 4
+	for i in range(1, 21):
+		new_product = Product(
+			title='Textbook ' + str(i),
+			real_quality=round(np.random.uniform(30, 60, None)),
+			amount=round(np.random.uniform(50, 70, None)),
+			experiment_num=4
 		)
 
 		new_product = vendor_uncertainty_level(new_product, 'H')
@@ -112,5 +112,6 @@ def delete(request):
 
 
 def clean_session(request):
-	request.session['session_set'] = False
+	request.session.flush()
+
 	return redirect('control')

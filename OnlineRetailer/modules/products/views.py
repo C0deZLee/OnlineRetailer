@@ -2,19 +2,21 @@ from numpy import random
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from django.utils import timezone
 
 from .models import Product
-from ..experiments.models import Settings, Record
+from ..experiments.models import Settings, Record, Survey
 
 
 def read_view(request):
 	# if not request.session.get('session_set', False):
 	request.session['cart'] = []
-	request.session['exp_num'] = int(random.uniform(1, 3))
+	request.session['exp_num'] = int(random.randint(1, 4))
 	request.session['repeat_count'] = 'Attempt 1'
 	request.session['session_set'] = True
-	return render(request, 'read.html')
+	ctx = {}
+	if request.session.get('wrong_twice'):
+		ctx['wrong_twice'] = True
+	return render(request, 'read.html', ctx)
 
 
 def read1_view(request):
@@ -36,7 +38,14 @@ def read3_view(request):
 		return redirect('read')
 	ctx = {'exp_num': request.session['exp_num']}
 	if request.GET.get('wrong'):
-		ctx['wrong'] = True
+		# wrong twice
+		if request.session.get('wrong'):
+			request.session['wrong_twice'] = True
+			return redirect('read')
+		else:
+			request.session['wrong'] = True
+			ctx['wrong'] = True
+
 	return render(request, 'read3.html', ctx)
 
 
@@ -50,15 +59,9 @@ def read4_view(request):
 def quiz_view(request):
 	if not request.session.get('session_set', False):
 		return redirect('read')
+	ctx = {'exp_num': request.session['exp_num']}
 
-	return render(request, 'quiz.html')
-
-
-def quiz_check_view(request):
-	if not request.session.get('session_set', False):
-		return redirect('read')
-
-	return render(request, 'quiz.html')
+	return render(request, 'quiz.html', ctx)
 
 
 def product_list_view(request):
@@ -69,7 +72,7 @@ def product_list_view(request):
 	exp_num = request.session['exp_num']
 
 	if request.session['repeat_count'] == 'Finished':
-		return redirect('confirm')
+		return redirect('survey')
 
 	products_all = Product.objects.filter(experiment_num=exp_num)
 	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List', 'repeat_count': request.session['repeat_count']})
@@ -97,34 +100,25 @@ def product_confirmation_view(request):
 	else:
 		user_ip = request.META.get('REMOTE_ADDR')
 
-	cart = request.session.get('cart', [])
+	product = request.session.get('cart', [])[0]
 	exp_num = request.session['exp_num']
-	setting = Settings.objects.first()
-
-	rank_bonus = 0.0
-	raw_score = 0.0
 	total_score = 0.0
-
-	for product in cart:
-		raw_score = product['price'] / product['real_quality']
-		raw_score = float(format(raw_score, '.2f'))
-		for index, item in enumerate(Product.objects.filter(experiment_num=exp_num).order_by('real_quality')):
-			if str(item.title) == str(product['title']):
-				# rank_num = index
-				rank_bonus = float(float(index) / 20.0)
-				total_score = raw_score + rank_bonus
-				total_score = format(total_score, '.2f')
-				new_record = Record(
-					experiment_num=request.session['exp_num'],
-					user_ip=user_ip,
-					product_id=product['id'],
-					product_fake_quality=product['fake_quality'],
-					product_real_quality=product['real_quality'],
-					raw_score=raw_score,
-					bonus=rank_bonus,
-					total_score=total_score,
-					created=timezone.now())
-				new_record.save()
+	raw_score = float(format(product['price'] / product['real_quality'], '.2f'))
+	for index, item in enumerate(Product.objects.filter(experiment_num=exp_num).order_by('-real_quality')):
+		if str(item.title) == str(product['title']):
+			rank = index + 1
+			rank_score = float(format(rank / 20.0, '.2f'))
+			total_score = float(format(raw_score + rank_score, '.2f'))
+			new_record = Record(
+				experiment_num=request.session['exp_num'],
+				user_ip=user_ip,
+				product_id=product['id'],
+				product_fake_quality=product['fake_quality'],
+				product_real_quality=product['real_quality'],
+				raw_score=raw_score,
+				rank=rank,
+				total_score=total_score)
+			new_record.save()
 
 	page_title = request.session['repeat_count'] + ' Result'
 
@@ -136,13 +130,42 @@ def product_confirmation_view(request):
 		request.session['repeat_count'] = 'Finished'
 
 	return render(request, 'confirmation.html',
-	              {'code'        : setting.finish_code,
-	               'title'       : page_title,
-	               'cart'        : cart,
+	              {'title'       : page_title,
+	               'product'     : product,
 	               'total_score' : total_score,
-	               'rank'        : rank_bonus,
 	               'raw_score'   : raw_score,
 	               'repeat_count': request.session['repeat_count']})
+
+
+def survey_view(request):
+	if request.method == 'GET':
+		return render(request, 'survey.html')
+	elif request.method == 'POST':
+		if request.META.get('HTTP_X_FORWARDED_FOR'):
+			user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+		else:
+			user_ip = request.META.get('REMOTE_ADDR')
+		Survey.objects.create(
+			clarity=request.POST['clarity'],
+			satisfied=request.POST['satisfied'],
+			gender=request.POST['gender'],
+			age=request.POST['age'],
+			language=request.POST['language'],
+			user_ip=user_ip
+		)
+
+		ctx = {}
+		if request.session['repeat_count'] == 'Finished':
+			setting = Settings.objects.first()
+			ctx['code'] = setting.finish_code
+			records = Record.objects.filter(user_ip=user_ip)
+			highest_rank = 20
+			for record in records:
+				print(record)
+				if record.rank < highest_rank:
+					highest_rank = record.rank
+			ctx['rank'] = highest_rank
+		return render(request, 'survey.html', ctx)
 
 
 def add_to_cart(request, item_id):
