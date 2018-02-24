@@ -103,7 +103,8 @@ def product_confirmation_view(request):
 	product = request.session.get('cart', [])[0]
 	exp_num = request.session['exp_num']
 	total_score = 0.0
-	raw_score = float(format(product['price'] / product['real_quality'], '.2f'))
+	raw_score = float(format(product['real_quality'] / product['price'], '.2f'))
+	rank_score = 0
 	for index, item in enumerate(Product.objects.filter(experiment_num=exp_num).order_by('-real_quality')):
 		if str(item.title) == str(product['title']):
 			rank = index + 1
@@ -134,6 +135,7 @@ def product_confirmation_view(request):
 	               'product'     : product,
 	               'total_score' : total_score,
 	               'raw_score'   : raw_score,
+	               'bonus'       : rank_score,
 	               'repeat_count': request.session['repeat_count']})
 
 
@@ -161,7 +163,6 @@ def survey_view(request):
 			records = Record.objects.filter(user_ip=user_ip)
 			highest_rank = 20
 			for record in records:
-				print(record)
 				if record.rank < highest_rank:
 					highest_rank = record.rank
 			ctx['rank'] = highest_rank
