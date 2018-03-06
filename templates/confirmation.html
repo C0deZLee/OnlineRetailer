@@ -12,7 +12,9 @@
                         The survey has been successfully finished!
                     </h3>
                     <a class="font-weight-normal" href="/survey">
-                        Please click here to answer some final questions and get your payment code
+                        <b>
+                            Please click here to answer a short survey to reveal the bonus and get the payment code
+                        </b>
                     </a>
                 </div>
             {% endif %}
@@ -22,11 +24,9 @@
                     <tr>
                         <th class="w-15">Item</th>
                         <th class="w-15">Claimed Quality</th>
-                        <th class="w-15">Real Quality</th>
+                        <th class="w-15">True Quality</th>
                         <th class="w-15">Price</th>
-                        <th class="w-15">Real Quality / Price Ratio</th>
-                        <th class="w-15">Bonus</th>
-                        <th class="w-15">Final Score</th>
+                        <th class="w-15">Real Quality per Dollar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,9 +37,6 @@
                         <td>{{ product.real_quality }}</td>
                         <td>${{ product.price }}</td>
                         <td>{{ raw_score }}</td>
-                        <td>{{ bonus }}</td>
-
-                        <td><span class="font-weight-bold"> {{ total_score }} </span></td>
                     </tr>
                     </tbody>
                 </table>

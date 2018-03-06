@@ -135,7 +135,6 @@ def product_confirmation_view(request):
 	               'product'     : product,
 	               'total_score' : total_score,
 	               'raw_score'   : raw_score,
-	               'bonus'       : rank_score,
 	               'repeat_count': request.session['repeat_count']})
 
 
@@ -166,6 +165,7 @@ def survey_view(request):
 				if record.rank < highest_rank:
 					highest_rank = record.rank
 			ctx['rank'] = highest_rank
+			ctx['bonus'] = ((21 - highest_rank) / 20.0) * 0.4
 		return render(request, 'survey.html', ctx)
 
 
