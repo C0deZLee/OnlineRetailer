@@ -146,6 +146,9 @@ def survey_view(request):
 			user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
 		else:
 			user_ip = request.META.get('REMOTE_ADDR')
+
+		if request.POST['clarity'] == '0' or request.POST['satisfied'] == '0' or request.POST['gender'] == '0':
+			return render(request, 'survey.html', {'error': 'Please fill the survey.'})
 		Survey.objects.create(
 			clarity=request.POST['clarity'],
 			satisfied=request.POST['satisfied'],
@@ -165,7 +168,7 @@ def survey_view(request):
 				if record.rank < highest_rank:
 					highest_rank = record.rank
 			ctx['rank'] = highest_rank
-			ctx['bonus'] = ((21 - highest_rank) / 20.0) * 0.4
+			ctx['bonus'] = format(((21 - highest_rank) / 20.0) * 0.4, '.2f')
 		return render(request, 'survey.html', ctx)
 
 
