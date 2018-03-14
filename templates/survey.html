@@ -7,7 +7,7 @@
             {% csrf_token %}
             {% if code %}
                 <p>Your finish code is: {{ code }}{{ rank }}</p>
-                <p>Your bonus is: {{ bonus }}</p>
+                <p>Your bonus is: ${{ bonus }}</p>
             {% else %}
                 <div><p class="text-danger">{{ error }}</p></div>
                 <div class="mb-6">
