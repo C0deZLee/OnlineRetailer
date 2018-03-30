@@ -59,8 +59,12 @@ urlpatterns = [
 	    exp_views.random, name='random'),
 	url(r'^control/delete/$',
 	    exp_views.delete, name='delete'),
-	url(r'^control/clean/',
-	    exp_views.clean_session, name='clean')
+	url(r'^control/clean/$',
+	    exp_views.clean_session, name='clean'),
+	url(r'^control/download_survey/$',
+	    exp_views.download_survey, name='download_survey'),
+	url(r'^control/download_data/$',
+	    exp_views.download_data, name='download_data')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

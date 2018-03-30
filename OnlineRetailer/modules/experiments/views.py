@@ -1,6 +1,11 @@
+import csv
 import numpy as np
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from .models import Survey, Record
 from ..products.models import Product
 
 
@@ -111,7 +116,37 @@ def delete(request):
 	return redirect('control')
 
 
+@login_required
 def clean_session(request):
 	request.session.flush()
-
 	return redirect('control')
+
+
+@login_required
+def download_data(request):
+	# Create the HttpResponse object with the appropriate CSV header.
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+	writer = csv.writer(response)
+	writer.writerow(['experiment_num', 'user_ip', 'product', 'product_fake_quality', 'product_real_quality', 'raw_score', 'rank', 'total_score', 'created'])
+
+	for r in Record.objects.all():
+		writer.writerow([r.experiment_num, r.user_ip, r.product, r.product_fake_quality, r.product_real_quality, r.raw_score, r.rank, r.total_score, r.created])
+
+	return response
+
+
+@login_required
+def download_survey(request):
+	# Create the HttpResponse object with the appropriate CSV header.
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="survey.csv"'
+
+	writer = csv.writer(response)
+	writer.writerow(['clarity', 'satisfied', 'gender', 'age', 'language', 'user_ip', 'created'])
+
+	for s in Survey.objects.all():
+		writer.writerow([s.clarity, s.satisfied, s.gender, s.age, s.language, s.user_ip, s.created])
+
+	return response
