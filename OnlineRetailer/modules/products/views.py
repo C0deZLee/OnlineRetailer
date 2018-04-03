@@ -75,7 +75,11 @@ def product_list_view(request):
 		return redirect('survey')
 
 	products_all = Product.objects.filter(experiment_num=exp_num)
-	return render(request, 'list.html', {'products': products_all, 'cart': cart, 'title': 'Product List', 'repeat_count': request.session['repeat_count']})
+	return render(request, 'list.html', {'products'    : products_all,
+	                                     'cart'        : cart,
+	                                     'title'       : 'Product List',
+	                                     'exp_num'     : exp_num,
+	                                     'repeat_count': request.session['repeat_count']})
 
 
 def product_cart_view(request):
