@@ -1,4 +1,4 @@
-from numpy import random
+from random import randrange
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
@@ -10,7 +10,7 @@ from ..experiments.models import Settings, Record, Survey
 def read_view(request):
 	# if not request.session.get('session_set', False):
 	request.session['cart'] = []
-	request.session['exp_num'] = int(random.randint(1, 4))
+	request.session['exp_num'] = int(randrange(1, 5))
 	request.session['repeat_count'] = 'Attempt 1'
 	request.session['session_set'] = True
 	ctx = {}
